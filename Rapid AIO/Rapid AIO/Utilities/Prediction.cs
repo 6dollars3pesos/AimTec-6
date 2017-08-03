@@ -17,6 +17,13 @@
 
             if (output == Vector3.Zero) return;
 
+            var collision = Collision.GetCollision(new List<Vector3>() { output }, input);
+
+            if (spell.Collision == true && collision.Count > 1)
+            {
+                return;
+            }
+
             spell.Cast(output);
         }
 
