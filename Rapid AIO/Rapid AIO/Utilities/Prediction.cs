@@ -1,9 +1,11 @@
 ﻿namespace Rapid_AIO.Utilities
 {
     using System;
+    using System.Collections.Generic;
 
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Collision;
     using Aimtec.SDK.Prediction.Skillshots;
 
     using Spell = Aimtec.SDK.Spell;
@@ -19,7 +21,7 @@
 
             var collision = Collision.GetCollision(new List<Vector3>() { output }, input);
 
-            if (spell.Collision == true && collision.Count > 1)
+            if (spell.Collision && collision.Count > 1)
             {
                 return;
             }
@@ -72,7 +74,7 @@
                 if (result < 0) result = (float)Math.Max(t1, t2);
 
                 if (result < 0) result = 0;
-            }            
+            }
 
             return result;
         }
