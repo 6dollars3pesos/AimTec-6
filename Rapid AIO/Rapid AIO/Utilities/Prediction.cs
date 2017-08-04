@@ -48,16 +48,17 @@
                 var direction = (wayPoints[i].To3D() - wayPoints[i + 1].To3D()).Normalized();
 
                 position.Extend(direction, input.Unit.MoveSpeed * input.Delay);
+                position.Extend(-direction, input.Unit.BoundingRadius);
 
                 var toUnitDirection = (position - input.From).Normalized();
-                var cosTheta = direction * toUnitDirection;
-
-                position.Extend(-direction, (input.Radius * cosTheta).Length);
+                var cosTheta = (direction * toUnitDirection).Length;
+                var castDirection = (direction + toUnitDirection) / 2;
+                position.Extend(-castDirection, input.Radius * cosTheta);
 
                 var distance = position.Distance(input.From);
 
                 var a = Math.Pow(input.Unit.MoveSpeed, 2) - Math.Pow(input.Speed, 2);
-                var b = (2 * input.Unit.MoveSpeed * distance * cosTheta).Length;
+                var b = 2 * input.Unit.MoveSpeed * distance * cosTheta;
                 var c = Math.Pow(distance, 2);
 
                 var discriminant = Math.Pow(b, 2) - 4 * a * c;

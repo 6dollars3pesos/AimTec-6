@@ -59,7 +59,7 @@
 
             var target = TargetSelector.GetTarget(this.E.Range);
 
-            if (!target.IsValidTarget(this.E.Range) && !target.HasBuffOfType(BuffType.Knockup)) return;
+            if (!target.IsValidTarget(this.E.Range)) return;
 
             this.E.Cast();
             Orbwalker.Implementation.ForceTarget(target);
