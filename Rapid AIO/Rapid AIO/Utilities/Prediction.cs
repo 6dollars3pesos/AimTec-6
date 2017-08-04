@@ -21,7 +21,7 @@
 
             var collision = Collision.GetCollision(new List<Vector3>() { output }, input);
 
-            if (spell.Collision && collision.Count > 1)
+            if (spell.Collision && collision.Count >= 1)
             {
                 return;
             }
