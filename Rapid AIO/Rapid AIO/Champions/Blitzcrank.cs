@@ -61,8 +61,6 @@
 
             if (!target.IsValidTarget(this.E.Range)) return;
 
-            target.ServerPosition.To2D().Rotated(30);
-
             this.E.Cast();
             Orbwalker.Implementation.ForceTarget(target);
         }
