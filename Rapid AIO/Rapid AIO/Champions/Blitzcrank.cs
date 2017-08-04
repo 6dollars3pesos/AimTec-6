@@ -11,6 +11,8 @@
     using Rapid_AIO.Bases;
     using Rapid_AIO.Utilities;
 
+    using static Rapid_AIO.Utilities.Extensions;
+
     using Spell = Aimtec.SDK.Spell;
 
     internal class Blitzcrank : Champion
@@ -41,7 +43,8 @@
 
             Orbwalker.Implementation.Attach(RootMenu);
 
-            var comboMenu = new Menu("Combo", "Combo") { new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E") };
+            var comboMenu =
+                new Menu("Combo", "Combo") { new MenuBool("Q", "Use Q"), GetWhiteList(), new MenuBool("E", "Use E") };
 
             RootMenu.Add(comboMenu);
 
@@ -71,7 +74,7 @@
 
             var target = TargetSelector.GetTarget(this.Q.Range);
 
-            if (!target.IsValidTarget(this.Q.Range)) return;
+            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName].As<MenuBool>().Enabled) return;
 
             this.Q.CastEx(target);
         }
