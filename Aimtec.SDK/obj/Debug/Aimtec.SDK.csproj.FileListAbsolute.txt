@@ -1,0 +1,7 @@
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\bin\Debug\Aimtec.SDK.dll
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\bin\Debug\Aimtec.SDK.pdb
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\bin\Debug\Aimtec.dll
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\bin\Debug\NLog.dll
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\obj\Debug\Aimtec.SDK.dll
+C:\Users\Eren\Source\Repos\Aimtec.SDK\Aimtec.SDK\obj\Debug\Aimtec.SDK.pdb
