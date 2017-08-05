@@ -17,9 +17,11 @@
             var input = spell.GetPredictionInput(target);
             var output = GetPrediction(input);
 
-            if (output.CastPosition == Vector3.Zero || output.HitChance == HitChance.None) return;
+            if (output.HitChance == HitChance.None) return;
 
-            var collision = Collision.GetCollision(new List<Vector3>() { output.CastPosition }, input);
+            var collision = Collision.GetCollision(
+                new List<Vector3>() { output.UnitPosition, output.CastPosition },
+                input);
 
             if (spell.Collision && collision.Count >= 1)
             {
@@ -29,7 +31,7 @@
             spell.Cast(output.CastPosition);
         }
 
-        internal static PredictionOutput GetPrediction(PredictionInput input)
+        private static PredictionOutput GetPrediction(PredictionInput input)
         {
             if (!input.Unit.IsValidTarget())
             {
@@ -80,7 +82,7 @@
                                };
                 }
 
-                input.Speed /= 3;
+                input.Speed /= (float)(Math.Atan(1) * 3);
 
                 castPosition = input.Unit.ServerPosition + velocity * (impactTime * input.Speed);
 
@@ -93,6 +95,12 @@
                                    UnitPosition = Vector3.Zero
                                };
                 }
+
+                var toCastPosition = (castPosition - input.From).Normalized();
+                var castDirection = (toCastPosition + direction) / 2;
+
+                unitPosition = castDirection.Extend(-castDirection, input.Unit.BoundingRadius);
+                unitPosition.Extend(-direction, input.Radius);
             }
 
             return new PredictionOutput()
@@ -125,13 +133,9 @@
                 position.Extend(velocity, input.Delay);
 
                 var toUnitDirection = (position - input.From).Normalized();
-                var castDirection = (direction + toUnitDirection) / 2;
                 var cosTheta = Vector3.Dot(direction, toUnitDirection);
 
-                position.Extend(-direction, input.Radius * cosTheta);
-                position.Extend(-castDirection, input.Unit.BoundingRadius * cosTheta);
-
-                var a = Vector3.Dot(velocity, velocity) - Math.Pow(input.Speed, 2);
+                var a = Vector3.Dot(velocity, velocity) - (float)Math.Pow(input.Speed, 2);
                 var b = 2 * Vector3.Dot(velocity, toUnitDirection) * cosTheta;
                 var c = Vector3.Dot(toUnitDirection, toUnitDirection);
 
