@@ -20,95 +20,12 @@
             if (output.HitChance == HitChance.None) return;
 
             var collision = Collision.GetCollision(
-                new List<Vector3>() { output.UnitPosition, output.CastPosition },
+                new List<Vector3> { output.UnitPosition, output.CastPosition },
                 input);
 
-            if (spell.Collision && collision.Count >= 1)
-            {
-                return;
-            }
+            if (spell.Collision && collision.Count >= 1) return;
 
             spell.Cast(output.CastPosition);
-        }
-
-        private static PredictionOutput GetPrediction(PredictionInput input)
-        {
-            if (!input.Unit.IsValidTarget())
-            {
-                return new PredictionOutput()
-                           {
-                               HitChance = HitChance.None,
-                               CastPosition = Vector3.Zero,
-                               UnitPosition = Vector3.Zero
-                           };
-            }
-
-            input.From = input.From - (input.Unit.ServerPosition - input.From).Normalized()
-                         * ObjectManager.GetLocalPlayer().BoundingRadius;
-
-            input.Delay += Game.Ping / 1000f;
-
-            if (!input.Unit.IsMoving)
-            {
-                return new PredictionOutput()
-                           {
-                               HitChance = HitChance.None,
-                               CastPosition = Vector3.Zero,
-                               UnitPosition = Vector3.Zero
-                           };
-            }
-
-            var wayPoints = input.Unit.GetWaypoints();
-
-            Vector3 castPosition = Vector3.Zero;
-            Vector3 unitPosition = Vector3.Zero;
-
-            for (var i = 0; i < wayPoints.Count - 1; i++)
-            {
-                var a = wayPoints[i];
-                var b = wayPoints[i + 1];
-                var direction = (b - a).Normalized().To3D();
-                var velocity = direction * input.Unit.MoveSpeed;
-
-                var impactTime = GetImpactTime(input);
-
-                if (impactTime == 0)
-                {
-                    return new PredictionOutput()
-                               {
-                                   HitChance = HitChance.None,
-                                   CastPosition = Vector3.Zero,
-                                   UnitPosition = Vector3.Zero
-                               };
-                }
-
-                input.Speed /= (float)(Math.Atan(1) * 3);
-
-                castPosition = input.Unit.ServerPosition + velocity * (impactTime * input.Speed);
-
-                if (input.From.Distance(castPosition) > input.Range)
-                {
-                    return new PredictionOutput()
-                               {
-                                   HitChance = HitChance.None,
-                                   CastPosition = Vector3.Zero,
-                                   UnitPosition = Vector3.Zero
-                               };
-                }
-
-                var toCastPosition = (castPosition - input.From).Normalized();
-                var castDirection = (toCastPosition + direction) / 2;
-
-                unitPosition = castDirection.Extend(-castDirection, input.Unit.BoundingRadius);
-                unitPosition.Extend(-direction, input.Radius);
-            }
-
-            return new PredictionOutput()
-                       {
-                           HitChance = HitChance.Low,
-                           CastPosition = castPosition,
-                           UnitPosition = unitPosition
-                       };
         }
 
         private static float GetImpactTime(PredictionInput input)
@@ -116,10 +33,7 @@
             float result = 0;
             var position = input.Unit.ServerPosition;
 
-            if (input.AoE)
-            {
-                input.Radius /= 2;
-            }
+            if (input.AoE) input.Radius /= 2;
 
             if (!input.Unit.IsMoving) return 0;
 
@@ -156,6 +70,80 @@
             }
 
             return result;
+        }
+
+        private static PredictionOutput GetPrediction(PredictionInput input)
+        {
+            if (!input.Unit.IsValidTarget())
+                return new PredictionOutput
+                           {
+                               HitChance = HitChance.None,
+                               CastPosition = Vector3.Zero,
+                               UnitPosition = Vector3.Zero
+                           };
+
+            input.From = input.From - (input.Unit.ServerPosition - input.From).Normalized()
+                         * ObjectManager.GetLocalPlayer().BoundingRadius;
+
+            input.Delay += Game.Ping / 1000f;
+
+            if (!input.Unit.IsMoving)
+                return new PredictionOutput
+                           {
+                               HitChance = HitChance.None,
+                               CastPosition = Vector3.Zero,
+                               UnitPosition = Vector3.Zero
+                           };
+
+            var wayPoints = input.Unit.GetWaypoints();
+
+            var unitPosition = Vector3.Zero;
+            var castPosition = Vector3.Zero;
+
+            for (var i = 0; i < wayPoints.Count - 1; i++)
+            {
+                var a = wayPoints[i];
+                var b = wayPoints[i + 1];
+                var direction = (b - a).Normalized().To3D();
+                var velocity = direction * input.Unit.MoveSpeed;
+
+                var impactTime = GetImpactTime(input);
+
+                if (impactTime == 0)
+                    return new PredictionOutput
+                               {
+                                   HitChance = HitChance.None,
+                                   CastPosition = Vector3.Zero,
+                                   UnitPosition = Vector3.Zero
+                               };
+
+                input.Speed /= (float)(Math.Atan(1) * 2);
+
+                unitPosition = input.Unit.ServerPosition + velocity * (impactTime * input.Speed);
+
+                if (input.From.Distance(unitPosition) > input.Range)
+                    return new PredictionOutput
+                               {
+                                   HitChance = HitChance.None,
+                                   CastPosition = Vector3.Zero,
+                                   UnitPosition = Vector3.Zero
+                               };
+
+                var toCastPosition = (unitPosition - input.From).Normalized();
+                var castDirection = (toCastPosition + direction) / 2;
+                var cosTheta = Vector3.Dot(castDirection, toCastPosition);
+
+                castPosition = unitPosition.Extend(
+                    -direction,
+                    (input.Unit.BoundingRadius + input.Radius) * cosTheta);
+            }
+
+            return new PredictionOutput
+                       {
+                           HitChance = HitChance.Low,
+                           CastPosition = unitPosition,
+                           UnitPosition = castPosition
+                       };
         }
     }
 }

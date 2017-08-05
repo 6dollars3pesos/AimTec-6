@@ -1,7 +1,5 @@
 ﻿namespace Rapid_AIO.Champions
 {
-    using System.Drawing;
-
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Menu;
@@ -13,7 +11,7 @@
     using Rapid_AIO.Bases;
     using Rapid_AIO.Utilities;
 
-    using static Rapid_AIO.Utilities.Extensions;
+    using static Utilities.Extensions;
 
     using Spell = Aimtec.SDK.Spell;
 
@@ -41,8 +39,6 @@
 
         internal override void SetMenu()
         {
-            RootMenu = new Menu("root", $"Rapid {Player.ChampionName}", true);
-
             Orbwalker.Implementation.Attach(RootMenu);
 
             var comboMenu =
@@ -58,28 +54,28 @@
             RootMenu.Attach();
         }
 
+        private void CastQ()
+        {
+            if (!RootMenu["Combo"]["Q"].As<MenuBool>().Enabled || !this.Q.Ready) return;
+
+            var target = TargetSelector.GetTarget(this.Q.Range);            
+
+            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName]
+                    .As<MenuBool>().Enabled) return;
+
+            this.Q.CastEx(target);
+        }
+
         private void CastE()
         {
             if (!RootMenu["Combo"]["E"].As<MenuBool>().Enabled || !this.E.Ready) return;
 
             var target = TargetSelector.GetTarget(this.E.Range);
 
-            if (!target.IsValidTarget(this.E.Range)) return;
+            if (!target.IsValidTarget(this.E.Range) && !target.HasBuffOfType(BuffType.Knockup)) return;
 
             this.E.Cast();
             Orbwalker.Implementation.ForceTarget(target);
-        }
-
-        private void CastQ()
-        {
-            if (!RootMenu["Combo"]["Q"].As<MenuBool>().Enabled || !this.Q.Ready) return;
-
-            var target = TargetSelector.GetTarget(this.Q.Range);
-
-            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName]
-                    .As<MenuBool>().Enabled) return;
-
-            this.Q.CastEx(target);
         }
     }
 }
