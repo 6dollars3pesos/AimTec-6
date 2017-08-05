@@ -54,18 +54,6 @@
             RootMenu.Attach();
         }
 
-        private void CastQ()
-        {
-            if (!RootMenu["Combo"]["Q"].As<MenuBool>().Enabled || !this.Q.Ready) return;
-
-            var target = TargetSelector.GetTarget(this.Q.Range);            
-
-            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName]
-                    .As<MenuBool>().Enabled) return;
-
-            this.Q.CastEx(target);
-        }
-
         private void CastE()
         {
             if (!RootMenu["Combo"]["E"].As<MenuBool>().Enabled || !this.E.Ready) return;
@@ -76,6 +64,18 @@
 
             this.E.Cast();
             Orbwalker.Implementation.ForceTarget(target);
+        }
+
+        private void CastQ()
+        {
+            if (!RootMenu["Combo"]["Q"].As<MenuBool>().Enabled || !this.Q.Ready) return;
+
+            var target = TargetSelector.GetTarget(this.Q.Range);
+
+            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName]
+                    .As<MenuBool>().Enabled) return;
+
+            this.Q.CastEx(target);
         }
     }
 }

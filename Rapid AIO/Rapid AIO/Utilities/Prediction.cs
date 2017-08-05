@@ -129,21 +129,20 @@
                                    UnitPosition = Vector3.Zero
                                };
 
-                var toCastPosition = (unitPosition - input.From).Normalized();
-                var castDirection = (toCastPosition + direction) / 2;
-                var cosTheta = Vector3.Dot(castDirection, toCastPosition);
+                var toCastDirection = (unitPosition - input.From).Normalized();
+                var castDirection = (toCastDirection + direction) / 2;
+                var cosTheta = Vector3.Dot(direction, toCastDirection);
 
-                castPosition = unitPosition.Extend(
-                    -direction,
-                    (input.Unit.BoundingRadius + input.Radius) * cosTheta);
+                castPosition = unitPosition.Extend(-direction * cosTheta, input.Unit.BoundingRadius);
+                castPosition.Extend(-castPosition * cosTheta, input.Radius);
             }
 
             return new PredictionOutput
                        {
                            HitChance = HitChance.Low,
-                           CastPosition = unitPosition,
-                           UnitPosition = castPosition
-                       };
+                           CastPosition = castPosition,
+                           UnitPosition = unitPosition
+            };
         }
     }
 }
