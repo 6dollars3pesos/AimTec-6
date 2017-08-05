@@ -125,9 +125,11 @@
                 position.Extend(velocity, input.Delay);
 
                 var toUnitDirection = (position - input.From).Normalized();
+                var castDirection = (direction + toUnitDirection) / 2;
                 var cosTheta = Vector3.Dot(direction, toUnitDirection);
 
-                position.Extend(-direction, (input.Radius + input.Unit.BoundingRadius) * (float)Math.Acos(cosTheta));
+                position.Extend(-direction, input.Radius * cosTheta);
+                position.Extend(-castDirection, input.Unit.BoundingRadius * cosTheta);
 
                 var a = Vector3.Dot(velocity, velocity) - Math.Pow(input.Speed, 2);
                 var b = 2 * Vector3.Dot(velocity, toUnitDirection) * cosTheta;
