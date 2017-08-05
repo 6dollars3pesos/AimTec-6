@@ -39,23 +39,6 @@
             this.CastE();
         }
 
-        internal override void OnRenderPresent()
-        {
-            if (Player.IsDead || MenuGUI.IsChatOpen() || MenuGUI.IsShopOpen()) return;
-
-            var target = TargetSelector.GetTarget(this.Q.Range);
-
-            if (!target.IsValidTarget(this.Q.Range)) return;
-
-            var input = Q.GetPredictionInput(target);
-
-            var rapidPosition = Utilities.Prediction.GetPrediction(input);
-            var sdkPosition = Q.GetPrediction(target);
-
-            Render.Circle(rapidPosition.CastPosition, 15, 3, Color.Yellow);
-            Render.Circle(sdkPosition.CastPosition, 15, 3, Color.Red);
-        }
-
         internal override void SetMenu()
         {
             RootMenu = new Menu("root", $"Rapid {Player.ChampionName}", true);
