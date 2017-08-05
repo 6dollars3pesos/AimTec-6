@@ -1,5 +1,7 @@
 ﻿namespace Rapid_AIO.Champions
 {
+    using System.Drawing;
+
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Menu;
@@ -35,6 +37,23 @@
         {
             this.CastQ();
             this.CastE();
+        }
+
+        internal override void OnRenderPresent()
+        {
+            if (Player.IsDead || MenuGUI.IsChatOpen() || MenuGUI.IsShopOpen()) return;
+
+            var target = TargetSelector.GetTarget(this.Q.Range);
+
+            if (!target.IsValidTarget(this.Q.Range)) return;
+
+            var input = Q.GetPredictionInput(target);
+
+            var rapidPosition = Utilities.Prediction.GetPrediction(input);
+            var sdkPosition = Q.GetPrediction(target);
+
+            Render.Circle(rapidPosition.CastPosition, 15, 3, Color.Yellow);
+            Render.Circle(sdkPosition.CastPosition, 15, 3, Color.Red);
         }
 
         internal override void SetMenu()
@@ -74,7 +93,8 @@
 
             var target = TargetSelector.GetTarget(this.Q.Range);
 
-            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName].As<MenuBool>().Enabled) return;
+            if (!target.IsValidTarget(this.Q.Range) || !RootMenu["Combo"]["WhiteList"][target.ChampionName]
+                    .As<MenuBool>().Enabled) return;
 
             this.Q.CastEx(target);
         }
