@@ -19,9 +19,10 @@
 
             input.From = input.From.SetFromPosition(input.Unit.ServerPosition);
             input.Delay = input.Delay.SetDelay();
+            
 
             if (input.Unit.IsDashing()) result = GetDashPrediction(input);
-            if (input.Unit.IsImmobile()) result = GetImmobilePrediction(input);
+            if ((input.Unit as Obj_AI_Hero).IsImmobile()) result = GetImmobilePrediction(input);
             if (input.Unit.IsMoving) result = GetLinearPrediction(input);
             if (!input.Unit.IsMoving) result = GetIdlePrediction(input);
 
@@ -92,7 +93,7 @@
 
         private static PredictionOutput GetImmobilePrediction(PredictionInput input)
         {
-            var immobileTime = input.Unit.GetImmobileTime();
+            var immobileTime = (input.Unit as Obj_AI_Hero).GetImmobileTime();
             var distance = input.From.Distance(input.Unit.ServerPosition);
             var collisionObjects = Collision.GetCollision(new List<Vector3> { input.Unit.ServerPosition }, input);
 

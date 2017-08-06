@@ -15,7 +15,7 @@
     {
         private static Obj_AI_Hero Player => ObjectManager.GetLocalPlayer();
 
-        public static bool CastRapid(this Spell spell, Obj_AI_Base target)
+        public static bool CastRapid(this Spell spell, Obj_AI_Hero target)
         {
             if (spell == null || target == null) return false;
 
@@ -33,8 +33,9 @@
             return true;
         }
 
-        internal static float GetImmobileTime(this Obj_AI_Base target)
-        {
+        internal static float GetImmobileTime(this Obj_AI_Hero target)
+        {           
+
             var result = target.Buffs
                 .Where(
                     buff => buff.IsActive && Game.ClockTime <= buff.EndTime
@@ -73,7 +74,7 @@
             return true;
         }
 
-        internal static bool IsImmobile(this Obj_AI_Base target)
+        internal static bool IsImmobile(this Obj_AI_Hero target)
         {
             if (target.HasBuffOfType(BuffType.Knockup) || target.HasBuffOfType(BuffType.Stun)
                 || target.HasBuffOfType(BuffType.Snare) || target.HasBuffOfType(BuffType.Suppression)
