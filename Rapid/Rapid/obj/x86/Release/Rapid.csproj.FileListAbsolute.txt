@@ -1,0 +1,8 @@
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\bin\x86\Release\Rapid.dll
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\bin\x86\Release\Rapid.pdb
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\bin\x86\Release\Aimtec.dll
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\bin\x86\Release\Aimtec.SDK.dll
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\bin\x86\Release\NLog.dll
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\bin\x86\Release\Newtonsoft.Json.dll
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\obj\x86\Release\Rapid.dll
+c:\users\eren\documents\Visual Studio 2017\Projects\Rapid\Rapid\obj\x86\Release\Rapid.pdb
