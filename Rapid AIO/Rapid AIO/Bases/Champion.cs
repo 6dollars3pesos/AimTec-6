@@ -55,17 +55,6 @@
         {
         }
 
-        internal virtual void CastSpell(Spell spell)
-        {
-            if (!RootMenu["Combo"][$"{spell.Slot}"].As<MenuBool>().Enabled || !spell.Ready) return;
-
-            var target = TargetSelector.GetTarget(spell.Range);
-
-            if (!target.IsValidTarget(spell.Range)) return;
-
-            spell.CastEx(target);
-        }
-
         internal virtual void OnGameUpdate()
         {
             if (Player.IsDead || MenuGUI.IsChatOpen() || MenuGUI.IsShopOpen()) return;

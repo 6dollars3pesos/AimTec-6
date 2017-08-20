@@ -56,24 +56,23 @@
     <Reference Include="Aimtec">
       <HintPath>C:\Users\Eren\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
     </Reference>
-    <Reference Include="Aimtec.SDK, Version=1.0.0.17, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Aimtec.SDK, Version=1.0.1.2, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Eren\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="ZLib">
-      <HintPath>C:\Users\Eren\AppData\Local\AimtecLoader\Data\System\ZLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bases\Champion.cs" />
     <Compile Include="Champions\Blitzcrank.cs" />
-    <Compile Include="Utilities\Prediction.cs" />
+    <Compile Include="Champions\Ezreal.cs" />
+    <Compile Include="Interfaces\IPrediction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\Prediction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

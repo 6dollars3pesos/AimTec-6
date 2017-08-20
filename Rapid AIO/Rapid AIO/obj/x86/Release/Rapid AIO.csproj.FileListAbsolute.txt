@@ -8,3 +8,13 @@ C:\Users\Eren\documents\Visual Studio 2017\Projects\Rapid AIO\Rapid AIO\bin\x86\
 C:\Users\Eren\documents\Visual Studio 2017\Projects\Rapid AIO\Rapid AIO\bin\x86\Release\Newtonsoft.Json.dll
 C:\Users\Eren\documents\Visual Studio 2017\Projects\Rapid AIO\Rapid AIO\obj\x86\Release\Rapid AIO.exe
 C:\Users\Eren\documents\Visual Studio 2017\Projects\Rapid AIO\Rapid AIO\obj\x86\Release\Rapid AIO.pdb
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\Rapid AIO.exe.config
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\Rapid AIO.exe
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\Rapid AIO.pdb
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\Aimtec.dll
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\Aimtec.SDK.dll
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\NLog.dll
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\bin\x86\Release\Newtonsoft.Json.dll
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\obj\x86\Release\Rapid AIO.csproj.CoreCompileInputs.cache
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\obj\x86\Release\Rapid AIO.exe
+C:\Users\Eren\Desktop\Aimtec\Rapid AIO\Rapid AIO\obj\x86\Release\Rapid AIO.pdb
