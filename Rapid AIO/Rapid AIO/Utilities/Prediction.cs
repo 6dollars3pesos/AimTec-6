@@ -54,15 +54,19 @@
 
                 unitPosition = input.Unit.ServerPosition + velocity * impactTime;
 
-                var cosTheta = Vector3.Dot(direction, direction);
-                castPosition = unitPosition - direction * (0.5f * (input.Unit.BoundingRadius + input.Radius) * cosTheta);
 
                 var toUnitDirection = (castPosition - input.From).Normalized();
-                cosTheta = Vector3.Dot(toUnitDirection, toUnitDirection);
-                castPosition = unitPosition + toUnitDirection * (0.5f * (input.Unit.BoundingRadius + input.Radius) * cosTheta);
+                var sinTheta = Vector3.Dot(direction, toUnitDirection);
+                var cosTheta = Vector3.Dot(direction, direction);
+                castPosition = unitPosition - direction * (sinTheta * (input.Unit.BoundingRadius + input.Radius) * cosTheta);
 
                 toUnitDirection = (castPosition - input.From).Normalized();
+                sinTheta = Vector3.Dot(direction, toUnitDirection);
                 cosTheta = Vector3.Dot(toUnitDirection, toUnitDirection);
+                castPosition = unitPosition + toUnitDirection * (sinTheta * (input.Unit.BoundingRadius + input.Radius) * cosTheta);
+
+                toUnitDirection = (castPosition - input.From).Normalized();
+                cosTheta = Vector3.Dot(direction, toUnitDirection);
                 var checkPosition = castPosition + velocity * (input.Delay * cosTheta);
                 if (input.From.Distance(checkPosition) > input.Range)
                     return new PredictionOutput { HitChance = HitChance.OutOfRange };
