@@ -65,9 +65,7 @@
                 cosTheta = Vector3.Dot(toUnitDirection, toUnitDirection);
                 castPosition = unitPosition + toUnitDirection * (sinTheta * (input.Unit.BoundingRadius + input.Radius) * cosTheta);
 
-                toUnitDirection = (castPosition - input.From).Normalized();
-                cosTheta = Vector3.Dot(direction, toUnitDirection);
-                var checkPosition = castPosition + velocity * (input.Delay * cosTheta);
+                var checkPosition = castPosition + velocity * input.Delay;
                 if (input.From.Distance(checkPosition) > input.Range)
                     return new PredictionOutput { HitChance = HitChance.OutOfRange };
             }
